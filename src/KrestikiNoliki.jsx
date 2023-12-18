@@ -18,12 +18,9 @@ function Square({ value, onSquareClick }) {
                         value === 'X' ?
                             <img src={matiLogo} className="gamelogo" alt="MATI logo" />
                             :
-                            <img src={maiLogo} className="gamelogo" alt="MAI logo" />
-
-                    }
+                            <img src={maiLogo} className="gamelogo" alt="MAI logo" />}
                 </button>
-            </>
-        )
+            </>)
     }
     if (value === 3) {
         return
@@ -41,10 +38,9 @@ function Square({ value, onSquareClick }) {
     )
 }
 
-
 function Board({ xIsNext, squares, onPlay }) {
     {/* ‘ункци€ дл€ обновлени€ клеток доски*/}
-    function handleClick(i) {
+    function handleClick(i){
         {/* ѕобеда или все квадраты заполнены*/ }
         if (calculateWinner(squares) || squares[i]) {
             return;
@@ -62,14 +58,19 @@ function Board({ xIsNext, squares, onPlay }) {
     const winner = calculateWinner(squares);
     let status;
     if (winner) {
-        status = 'Winner: ' + winner;
-    } else {
-        status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+        status = 'Winner: ' + (winner === 'X' ? 'MATI': 'MAI');
+    }
+    else {
+        status = 'Next player: ' + (xIsNext ? 'MATI' : 'MAI');
     }
 
     return (
         <>
-            <div className="status">{status}</div>
+            <div className="status">
+                <>
+                    {status}
+                </>
+            </div>
             {/* ѕередача значений каждому квадрату через props*/}
             <div className="board-row">
                 {/* value - значение квадрата, squares[num] - num - номер квадрата*/}
