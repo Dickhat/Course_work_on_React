@@ -6,7 +6,6 @@ import './KrestikiNoliki.css'
 
 {/* Создание квадратов для игры. Value - номер квадрата, onSquareClick - функция для передачи компоненту родителю Board*/ }
 function Square({ value, onSquareClick }) {
-    console.log(value)
     if (value) {
         return (
             <>
@@ -38,6 +37,7 @@ function Square({ value, onSquareClick }) {
     )
 }
 
+{/* Доска игры */ }
 function Board({ xIsNext, squares, onPlay }) {
     {/* Функция для обновления клеток доски*/}
     function handleClick(i){
@@ -64,6 +64,7 @@ function Board({ xIsNext, squares, onPlay }) {
         status = 'Next player: ' + (xIsNext ? 'MATI' : 'MAI');
     }
 
+    {/* Возврат поля игры */ }
     return (
         <>
             <div className="status">
@@ -91,10 +92,15 @@ function Board({ xIsNext, squares, onPlay }) {
         </>
     );
 }
+
+{/* Логика игры*/ }
 function Game() {
+    {/* История ходов*/ }
     const [history, setHistory] = useState([Array(9).fill(null)]);
+    {/* Текущий ход*/ }
     const [currentMove, setCurrentMove] = useState(0);
     const xIsNext = currentMove % 2 === 0;
+    {/* Текущий квадрат поля 3x3*/ }
     const currentSquares = history[currentMove];
 
     function handlePlay(nextSquares) {
@@ -103,10 +109,12 @@ function Game() {
         setCurrentMove(nextHistory.length - 1);
     }
 
+    {/* Переход к метке выбранного хода*/ }
     function jumpTo(nextMove) {
         setCurrentMove(nextMove);
     }
 
+    {/* Панель выбора предыдущих ходов*/ }
     const moves = history.map((squares, move) => {
         let description;
         if (move > 0) {
@@ -133,7 +141,9 @@ function Game() {
     );
 }
 
+{/* Вычисление победителя игры крестики-нолики*/ }
 function calculateWinner(squares) {
+    {/* Возможные победные комбинации*/ }
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -144,6 +154,8 @@ function calculateWinner(squares) {
         [0, 4, 8],
         [2, 4, 6],
     ];
+
+    {/* Цикл проверки, возвращающий победителя*/ }
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
